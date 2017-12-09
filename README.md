@@ -12,7 +12,7 @@ Cons:
 * It only produces "minimized" JSON.
 * Only `string`, `number` and `boolean` can be used as table keys. Everything else is converted "lossy".
 * It does not distinguish "arrays" and "tables", because making such distinction would be too expensive in Lua. On the upside, all tables are handled uniformly.
-* It's not battle-tested. If you'll use the project, please start it, so that others (and me) would know it's really in use.
+* It's not battle-tested. If you'll use the project, please "star" it, so that others (and me) would know it's really in use.
 
 Implementations:
 * "incorrect_simple", a really simple formatter that doesn't care about speed too much. It's incorrect for strings containing quotes.
