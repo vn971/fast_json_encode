@@ -11,7 +11,9 @@ local delete_regexp = "[" .. delete_chars .. "]"
 
 -- escaping takes 2/3 of the time, but we can't avoid it...
 local function escape(str)
-	return str:gsub(delete_regexp, ""):gsub('\\', '\\\\'):gsub('"', '\\"')
+	str = gsub(str, delete_regexp, "")
+	str = gsub(str, '\\', '\\\\')
+	return gsub(str, '"', '\\"')
 end
 
 local function print_table_key(obj, buffer)
