@@ -3,7 +3,7 @@ Fast JSON encoder (formatter, printer) for Lua.
 Pros:
 
 * It uses [String Buffers](https://www.lua.org/pil/11.6.html) for fast string concatenation
-* It's written in Lua
+* It's written in Lua, 1 file, 31-67 LoC
 * It's fast (not as fast as a C library would be though)
 
 Cons:
@@ -13,6 +13,11 @@ Cons:
 * Only `string`, `number` and `boolean` can be used as table keys. Everything else is converted "lossy".
 * It does not distinguish "arrays" and "tables", because making such distinction would be too expensive in Lua. On the upside, all tables are handled uniformly.
 * It's not battle-tested. If you'll use the project, please start it, so that others (and me) would know it's really in use.
+
+Implementations:
+* "incorrect_simple", a really simple formatter that doesn't care about speed too much. It's incorrect for strings containing quotes.
+* "incorrect fast", a really fast formatter, but it doesn't have proper string escaping (for speed).
+* "correct", as fast as I could write it while being correct.
 
 Examples:
 
