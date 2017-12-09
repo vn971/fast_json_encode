@@ -15,9 +15,9 @@ Cons:
 * It's not battle-tested. If you'll use the project, please "star" it, so that others (and me) would know it's really in use.
 
 Implementations:
-* "incorrect_simple", a really simple formatter that doesn't care about speed too much. It's incorrect for strings containing quotes.
-* "incorrect fast", a really fast formatter, but it doesn't have proper string escaping (for speed).
-* "correct", as fast as I could write it while being correct.
+* "correct" -- as fast as I could write it while being correct.
+* "incorrect fast" -- four times faster, but doesn't have string escaping.
+* "incorrect simple" -- minimum LoC. No string escaping.
 
 Examples:
 
