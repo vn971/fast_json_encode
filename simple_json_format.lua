@@ -1,3 +1,5 @@
+-- WARNING: this code does not do string escaping. See json_format.lua for that.
+
 local function format_any_value(obj, buffer)
 	local _type = type(obj)
 	if _type == "table" then

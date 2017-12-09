@@ -4,6 +4,8 @@ local tostring = tostring
 local type = type
 local table = table
 
+-- WARNING: this code does not do string escaping. See json_format.lua for that.
+
 local function print_table_key(obj, buffer)
 	local _type = type(obj)
 	if _type == "string" or _type == "number" then

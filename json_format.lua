@@ -9,7 +9,7 @@ local delete_chars = string.char(00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11,
 	16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31) -- https://www.ietf.org/rfc/rfc4627.txt
 local delete_regexp = "[" .. delete_chars .. "]"
 
--- escaping takes 2/3 of the time, but we can't avoid it...
+-- escaping takes 3/4 of the time, but we can't avoid it...
 local function escape(str)
 	str = gsub(str, delete_regexp, "")
 	str = gsub(str, '\\', '\\\\')
