@@ -3,7 +3,8 @@
 local function format_any_value(obj, buffer)
 	local _type = type(obj)
 	if _type == "table" then
-		buffer[#buffer + 1] = '{"'
+		buffer[#buffer + 1] = '{'
+		buffer[#buffer + 1] = '"' -- needs to be separate for empty tables {}
 		for key, value in next, obj, nil do
 			buffer[#buffer + 1] = tostring(key) .. '":'
 			format_any_value(value, buffer)
