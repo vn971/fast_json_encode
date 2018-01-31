@@ -45,6 +45,8 @@ local function format_any_value(obj, buffer)
 		buffer[#buffer + 1] = '"' .. escape(obj) .. '"'
 	elseif _type == "boolean" or _type == "number" then
 		buffer[#buffer + 1] = tostring(obj)
+	elseif _type == "userdata" then
+		buffer[#buffer + 1] = '"' .. escape(tostring(obj)) .. '"'
 	else
 		buffer[#buffer + 1] = '"???' .. _type .. '???"'
 	end
