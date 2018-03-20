@@ -12,11 +12,10 @@ Cons:
 * It only produces "minimized" JSON.
 * Only `string`, `number` and `boolean` can be used as table keys. Everything else is converted "lossy".
 * It does not distinguish "arrays" and "tables", because making such distinction would be too expensive in Lua. On the upside, all tables are handled uniformly.
-* It's not battle-tested. If you'll use the project, please "star" it, so that others (and me) would know it's really in use.
 
 Implementations:
 * "correct" -- as fast as I could write it while being correct.
-* "incorrect fast" -- four times faster, but doesn't have string escaping.
+* "incorrect fast" -- three times faster, but doesn't have string escaping.
 * "incorrect simple" -- minimum LoC. No string escaping.
 
 Examples:
@@ -33,3 +32,4 @@ Examples:
 * `nil` => `null`
 
 License: Public Domain.
+If you'll use the project, please "star" it, so that others would know it's in use.
