@@ -1,19 +1,53 @@
+local gsub = string.gsub
+local ipairs = ipairs
 local next = next
 local print = print
+local string = string
+local table = table
+local table_concat = table.concat
 local tostring = tostring
 local type = type
-local gsub = string.gsub
-local table = table
 
-local delete_chars = string.char(00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15,
-	16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31) -- https://www.ietf.org/rfc/rfc4627.txt
-local delete_regexp = "[" .. delete_chars .. "]"
+local escape_transform_table = {
+	[string.char(00)] = "", -- https://www.ietf.org/rfc/rfc4627.txt
+	[string.char(01)] = "",
+	[string.char(02)] = "",
+	[string.char(03)] = "",
+	[string.char(04)] = "",
+	[string.char(05)] = "",
+	[string.char(06)] = "",
+	[string.char(07)] = "",
+	[string.char(08)] = "",
+	[string.char(09)] = "",
+	[string.char(10)] = "",
+	[string.char(11)] = "",
+	[string.char(12)] = "",
+	[string.char(13)] = "",
+	[string.char(14)] = "",
+	[string.char(15)] = "",
+	[string.char(16)] = "",
+	[string.char(17)] = "",
+	[string.char(18)] = "",
+	[string.char(19)] = "",
+	[string.char(20)] = "",
+	[string.char(21)] = "",
+	[string.char(22)] = "",
+	[string.char(23)] = "",
+	[string.char(24)] = "",
+	[string.char(25)] = "",
+	[string.char(26)] = "",
+	[string.char(27)] = "",
+	[string.char(28)] = "",
+	[string.char(29)] = "",
+	[string.char(30)] = "",
+	[string.char(31)] = "",
+	['\\'] = '\\\\',
+	['"'] = '\\"',
+}
 
--- escaping takes 3/4 of the time, but we can't avoid it...
+-- escaping takes 2/3 of the time, but we can't avoid it...
 local function escape(str)
-	str = gsub(str, delete_regexp, "")
-	str = gsub(str, '\\', '\\\\')
-	return gsub(str, '"', '\\"')
+	return gsub(str, ".", escape_transform_table)
 end
 
 local function print_table_key(obj, buffer)
@@ -56,7 +90,7 @@ local function _format_as_json(obj)
 	if obj == nil then return "null" else
 		local buffer = {}
 		format_any_value(obj, buffer)
-		return table.concat(buffer)
+		return table_concat(buffer)
 	end
 end
 
@@ -67,7 +101,7 @@ local function _print_as_json(...)
 		result[n] = _format_as_json(v)
 		n = n + 1
 	end
-	print(table.concat(result, "\t"))
+	print(table_concat(result, "\t"))
 end
 
 
