@@ -14,9 +14,8 @@ Cons:
 * It does not distinguish "arrays" and "tables", because making such distinction would be too expensive in Lua. On the upside, all tables are handled uniformly.
 
 Implementations:
+* "simple" -- minimum LoC. No string escaping.
 * "correct" -- as fast as I could write it while being correct.
-* "incorrect fast" -- three times faster, but doesn't have string escaping.
-* "incorrect simple" -- minimum LoC. No string escaping.
 
 Examples:
 
