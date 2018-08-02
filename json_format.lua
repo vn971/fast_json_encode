@@ -96,10 +96,8 @@ end
 
 local function _print_as_json(...)
 	local result = {}
-	local n = 1
-	for _, v in ipairs({ ... }) do
+	for n, v in ipairs({ ... }) do
 		result[n] = _format_as_json(v)
-		n = n + 1
 	end
 	print(table_concat(result, "\t"))
 end
