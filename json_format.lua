@@ -1,12 +1,8 @@
+local
+ipairs, next, print, string, table, tostring, type =
+ipairs, next, print, string, table, tostring, type
 local gsub = string.gsub
-local ipairs = ipairs
-local next = next
-local print = print
-local string = string
-local table = table
 local table_concat = table.concat
-local tostring = tostring
-local type = type
 
 local escape_transform_table = {
 	[string.char(00)] = "", -- https://www.ietf.org/rfc/rfc4627.txt
@@ -50,7 +46,7 @@ local function escape(str)
 	return gsub(str, ".", escape_transform_table)
 end
 
-local function print_table_key(obj, buffer)
+local function encode_table_key(obj, buffer)
 	local _type = type(obj)
 	if _type == "string" then
 		buffer[#buffer + 1] = escape(obj)
@@ -63,15 +59,15 @@ local function print_table_key(obj, buffer)
 	end
 end
 
-local function format_any_value(obj, buffer)
+local function encode_any_value(obj, buffer)
 	local _type = type(obj)
 	if _type == "table" then
 		buffer[#buffer + 1] = '{'
 		buffer[#buffer + 1] = '"' -- needs to be separate for empty tables {}
 		for key, value in next, obj, nil do
-			print_table_key(key, buffer)
+			encode_table_key(key, buffer)
 			buffer[#buffer + 1] = '":'
-			format_any_value(value, buffer)
+			encode_any_value(value, buffer)
 			buffer[#buffer + 1] = ',"'
 		end
 		buffer[#buffer] = '}' -- note the overwrite
@@ -86,22 +82,20 @@ local function format_any_value(obj, buffer)
 	end
 end
 
-local function _format_as_json(obj)
+local function encode_as_json(obj)
 	if obj == nil then return "null" else
 		local buffer = {}
-		format_any_value(obj, buffer)
+		encode_any_value(obj, buffer, 1)
 		return table_concat(buffer)
 	end
 end
 
-local function _print_as_json(...)
+_G.encode_as_json = encode_as_json
+
+function print_as_json(...)
 	local result = {}
 	for n, v in ipairs({ ... }) do
-		result[n] = _format_as_json(v)
+		result[n] = encode_as_json(v)
 	end
 	print(table_concat(result, "\t"))
 end
-
-
-format_as_json = _format_as_json
-print_as_json = _print_as_json

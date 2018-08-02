@@ -3,7 +3,7 @@ Fast JSON encoder (formatter, printer) for Lua.
 Pros:
 
 * It uses [String Buffers](https://www.lua.org/pil/11.6.html) for fast string concatenation
-* It's written in Lua, 1 file, 31-67 LoC
+* It's written in Lua, 1 file, 101 LoC
 * It's fast (not as fast as a C library would be though)
 
 Cons:
