@@ -17,27 +17,37 @@ local function print_table_key(obj, buffer)
 	end
 end
 
-local function format_any_value(obj, buffer)
+local function format_any_value(obj, buffer, buffer_length)
 	local _type = type(obj)
 	if _type == "table" then
-		buffer[#buffer + 1] = '{'
-		buffer[#buffer + 1] = '"' -- needs to be separate for empty tables {}
+		buffer[buffer_length] = '{'
+		buffer_length = buffer_length + 1
+		buffer[buffer_length] = '"' -- needs to be separate for empty tables {}
+		buffer_length = buffer_length + 1
 		for key, value in next, obj, nil do
 			print_table_key(key, buffer)
-			buffer[#buffer + 1] = '":'
-			format_any_value(value, buffer)
-			buffer[#buffer + 1] = ',"'
+			buffer[buffer_length] = '":'
+			buffer_length = buffer_length + 1
+			buffer_length = format_any_value(value, buffer)
+			buffer[buffer_length] = ',"'
+			buffer_length = buffer_length + 1
 		end
-		buffer[#buffer] = '}' -- note the overwrite
+		buffer[buffer_length - 1] = '}' -- note the overwrite
+		buffer_length = buffer_length - 1
 	elseif _type == "string" then
-		buffer[#buffer + 1] = '"' .. obj .. '"'
+		buffer[buffer_length] = '"' .. obj .. '"'
+		buffer_length = buffer_length + 1
 	elseif _type == "boolean" or _type == "number" then
-		buffer[#buffer + 1] = tostring(obj)
+		buffer[buffer_length] = tostring(obj)
+		buffer_length = buffer_length + 1
 	elseif _type == "userdata" then
-		buffer[#buffer + 1] = '"' .. tostring(obj) .. '"'
+		buffer[buffer_length] = '"' .. tostring(obj) .. '"'
+		buffer_length = buffer_length + 1
 	else
-		buffer[#buffer + 1] = '"???' .. _type .. '???"'
+		buffer[buffer_length] = '"???' .. _type .. '???"'
+		buffer_length = buffer_length + 1
 	end
+	return buffer_length
 end
 
 local function _format_as_json(obj)
